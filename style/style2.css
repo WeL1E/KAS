@@ -1,0 +1,119 @@
+.w3-container {
+    position: relative;
+}
+.p {
+    position: absolute;
+    top: 8px;
+    right: 15px;
+}
+.d {
+    text-decoration: none;
+}
+.d:hover {
+    text-decoration: underline;
+}
+.q {
+    position: absolute;
+    top: 45px;
+    right: 16px;
+    text-decoration: none;
+}
+.q:hover {
+    text-decoration: underline;
+}
+li {
+    list-style: none;
+    margin: 15px;
+    width: 280px;
+    height: 80px;
+    text-align: center;
+    display: inline-block;
+    background-color: #f2f2f2;
+}
+ul li a {
+    text-decoration: none;
+}
+ul li a:hover {
+    text-decoration: underline;
+}
+
+.tbh {
+    font-size: small;
+}
+
+input {
+    width: 100%;
+}
+.tabelbio {
+    margin-top: 30px;
+    margin-left: 10%;
+    font-weight: 300;
+    width: 80%;
+    border-collapse: collapse; 
+    border: 1px solid #000; 
+}
+
+.tabelbio th, .tabelbio td {
+    padding: 8px; 
+    text-align: left; 
+    border: 1px solid #000;
+    background-color: #f2f2f2; 
+}
+
+.tabelbio th {
+    background-color: #f2f2f2; 
+    height: 30px;
+    font-size: small;
+    text-align: center;
+}
+
+.tabelbios th button {
+    width: 100%;
+}
+
+.tabelbios {
+    margin-top: 30px;
+    margin-left: 10%;
+    font-weight: 300;
+    width: 80%;
+    border-collapse: collapse; 
+    border: 1px solid #000; 
+}
+
+.tabelbios th, .tabelbios td {
+    padding: 8px; 
+    text-align: left; 
+    border: 1px solid #000;
+    background-color: #f2f2f2;
+}
+
+.tabelbios th {
+    background-color: #f2f2f2; 
+    height: 30px;
+    font-size: small;
+    text-align: center;
+}
+
+.tabelbios th button {
+    width: 100%;
+}
+.tabelbio1  {
+    position: relative;
+    margin-top: 10px;
+    margin-left: 10%;
+    font-weight: 300;
+    width: 80%;
+    border: solid;
+}
+.tabelbio1 th {
+    height: 30px;
+    font-size: small;
+}
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #009688;
+    text-align: center;
+    color: white;
+}
