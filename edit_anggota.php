@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
+if (isset($_SESSION['id']) && isset($_SESSION['username'])) { //memeriksa id dan username
     include 'koneksi.php';
 
     // Ambil data di URL

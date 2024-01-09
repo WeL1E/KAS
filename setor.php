@@ -28,9 +28,6 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
             }
         }
     }
-
-    // Rest of your HTML and JavaScript code goes here
-    // ...
 } else {
     header("Location: login.php");
     exit();

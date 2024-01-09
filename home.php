@@ -1,9 +1,9 @@
 <?php 
 session_start();
 
-if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
-
+if (isset($_SESSION['id']) && isset($_SESSION['username'])) { //memeriksa id dan username
 include 'koneksi.php';
+
 //mentotalkan uang kas
 $query = mysqli_query($conn, "SELECT SUM(jumlah) AS total_jumlah FROM masuk");
 $result = mysqli_fetch_assoc($query);

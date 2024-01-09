@@ -1,10 +1,10 @@
 <?php 
 session_start();
 
-if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
+if (isset($_SESSION['id']) && isset($_SESSION['username'])) { //memeriksa id dan username
     include 'koneksi.php';
 
-    // Mengambil data yang berada di database
+    // Mengambil data di database
     $no=1;
     $ambildata = mysqli_query($conn, "SELECT * FROM anggota");
 ?>
@@ -51,7 +51,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
         <th>AKSI:</th>
     </tr>
 
-    <?php 
+    <?php //proses menampilkan data dari database
     while ($tampildata = mysqli_fetch_array($ambildata)) {
         echo "
         <tr>
@@ -76,7 +76,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
     ?>
 </table>
 
-<?php
+<?php //proses hapus data dari database
 if(isset($_GET['hapus'])) {
     $id_hapus = $_GET['hapus_id'];
     

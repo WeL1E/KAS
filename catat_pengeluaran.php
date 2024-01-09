@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
+if (isset($_SESSION['id']) && isset($_SESSION['username'])) { //memeriksa id dan username
     include 'koneksi.php';
 
     // Proses menyimpan ke database
@@ -28,7 +28,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
             }
         }
     }
-} else {
+} else { //jika belum login maka tidak bisa masuk ke halaman selanjutnya
     header("Location: login.php");
     exit();
 }

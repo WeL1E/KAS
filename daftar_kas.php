@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
+if (isset($_SESSION['id']) && isset($_SESSION['username'])) { //memeriksa id dan username
     include 'koneksi.php';
 
     // Mengambil data yang berada di database
@@ -54,7 +54,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
         <th>TANGGAL:</th>
     </tr>
 
-    <?php 
+    <?php //proses menampilkan data dari database
     while ($tampildatad = mysqli_fetch_array($ambildatad)) {
         echo "
         <tr>
