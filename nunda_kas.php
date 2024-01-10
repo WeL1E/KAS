@@ -46,15 +46,27 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
         <th>No:</th>
         <th>NAMA:</th>
         <th>TANGGAL:</th>
+        <th>AKSI:</th>
     </tr>
 
-    <?php 
+    <?php //proses menampilkan data dari database
     while ($tampildatan = mysqli_fetch_array($ambildatan)) {
         echo "
         <tr>
             <td>$no</td>
             <td>$tampildatan[nama]</td>
             <td>$tampildatan[tanggal]</td>
+            <td>
+                <form method='GET' action='nunda_kas_edit.php'>
+                    <input type='hidden' name='id' value='$tampildatan[id]'>
+                    <input type='submit' value='EDIT' style='width: 100%;'>
+                </form>
+                
+                <form method='GET' action='nunda_kas.php'>
+                    <input type='hidden' name='hapus_id' value='$tampildatan[id]'>
+                    <input type='submit' value='HAPUS' name='hapus' style='width: 100%; margin-top: 5px;'>
+                </form>
+            </td>
         </tr>";
 
         $no++;

@@ -4,36 +4,48 @@ session_start();
 if (isset($_SESSION['id']) && isset($_SESSION['username'])) { //memeriksa id dan username
     include 'koneksi.php';
 
-    // Proses menyimpan ke database
-    if (isset($_POST['proses'])) {
-        $ket = $_POST['ket'];
-        $harga = $_POST['harga'];
-        $tanggal = $_POST['tanggal'];
+    // Ambil data di URL
+    $id = $_GET["id"];
 
-        // Validasi data tidak boleh kosong
-        if (empty($ket) || empty($harga) || empty($tanggal)) {
-            echo "<script>alert('Semua Kolom Harus Terisi');</script>";
-        } else {
-            // Pemeriksaan apakah data sudah ada dalam database
-            $cekquery = mysqli_query($conn, "SELECT * FROM keluar WHERE keterangan = '$ket' AND jumlah = '$harga' AND tanggal = '$tanggal'");
-            $cekdata = mysqli_fetch_assoc($cekquery);
+    // Ambil data dari database untuk ditampilkan pada form
+    $query = "SELECT * FROM keluar WHERE id='$id'";
+    $result = mysqli_query($conn, $query);
 
-            if (!$cekdata) {
-                // Jika data belum ada, lakukan penyimpanan
-                mysqli_query($conn, "INSERT INTO keluar SET keterangan = '$ket', jumlah = '$harga', tanggal = '$tanggal'");
-                echo "<script>alert('Data berhasil disimpan');</script>";
-                echo "<meta http-equiv=refresh content=2;URL='daftar_out.php'>";
+    if ($result) {
+        $data = mysqli_fetch_assoc($result);
+
+        // Proses menyimpan ke database
+        if (isset($_POST['proses'])) {
+            $keterangan = $_POST['keterangan'];
+            $jumlah = $_POST['jumlah'];
+            $tanggal = $_POST['tanggal'];
+
+            // Validasi data tidak boleh kosong
+            if (empty($keterangan) || empty($jumlah)) {
+                echo "<script>alert('Semua Kolom Harus Terisi');</script>";
             } else {
-                // Jika data sudah ada, berikan pesan kesalahan
-                echo "<script>alert('Data dengan nama dan alamat tersebut sudah ada');</script>";
+                // Lakukan pembaruan data ke database
+                $query_update = "UPDATE keluar SET keterangan='$keterangan' ,jumlah='$jumlah' ,tanggal='$tanggal' WHERE id='$id'";
+                $result_update = mysqli_query($conn, $query_update);
+
+                if ($result_update) {
+                    echo "<script>alert('Data berhasil diperbarui');</script>";
+                    echo "<meta http-equiv=refresh content=2;URL='daftar_out.php'>";
+                } else {
+                    echo 'Error: ' . mysqli_error($conn);
+                }
             }
         }
+    } else {
+        echo 'Error: ' . mysqli_error($conn);
     }
-} else { //jika belum login maka tidak bisa masuk ke halaman selanjutnya
+    
+} else {
     header("Location: login.php");
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <title>HOME</title>
@@ -54,13 +66,11 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) { //memeriksa id dan
     <a href="catat_pengeluaran.php" class="w3-bar-item w3-button">Catat pengeluaran</a>
     <a href="daftar_out.php" class="w3-bar-item w3-button">Daftar pengeluaran</a>
 </div>
-
 <div id="main">
-
 <div class="w3-teal">
     <button id="openNav" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">&#9776;</button>
     <div class="w3-container">
-        <h1><a href="home.php" class="d">Catat Pengeluaran</a></h1>
+        <h1><a href="home.php" class="d">Edit Pengeluaran</a></h1>
         <div class="tag">
             <h6 class="p">Selamat Datang! <?php echo $_SESSION['nama']; ?></h6>
         <a href="logout.php" class="q">Logout</a>
@@ -70,20 +80,20 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) { //memeriksa id dan
 <form action="" method="post">
     <table class="tabelbio">
         <tr>
-            <th>Keterangan:</th>
-            <th>Harga:</th>
-            <th>Tanggal:</th>
+            <th>KETERANGAN:</th>
+            <th>JUMLAH:</th>
+            <th>TANGGAL:</th>
         </tr>
         <tr>
-            <th><input type="text" name="ket" placeholder="KETERANGAN"></th>
-            <th><input type="text" name="harga" placeholder="HARGA"></th>
-            <th><input type="date" name="tanggal" placeholder=""></th>
+            <th><input type="text" name="keterangan" placeholder="KETERANGAN" value="<?php echo $data['keterangan']; ?>"></th>
+            <th><input type="text" name="jumlah" placeholder="JUMLAH" value="<?php echo $data['jumlah']; ?>"></th>
+            <th><input type="date" name="tanggal" placeholder="" value="<?php echo $data['tanggal']; ?>"></th>
         </tr>
+        <tr>
             <td colspan="4" style="text-align: left;"><input type="submit" value="SIMPAN" name="proses"></td>
         </tr>
     </table>
 </form>
-
 <footer>
     <p>Footer</p>
 </footer>
@@ -100,7 +110,5 @@ function w3_close() {
     document.getElementById("openNav").style.display = "inline-block";
 }
 </script>
-
 </body>
 </html>
-

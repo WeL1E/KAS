@@ -22,6 +22,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                 // Jika data belum ada, lakukan penyimpanan
                 mysqli_query($conn, "INSERT INTO masuk SET nama = '$nama', jumlah = '$jumlah', tanggal = '$tanggal'");
                 echo "<script>alert('Data berhasil disimpan');</script>";
+                echo "<meta http-equiv=refresh content=2;URL='nunda_kas.php'>";
             } else {
                 // Jika data sudah ada, berikan pesan kesalahan
                 echo "<script>alert('Data dengan nama, jumlah, dan tanggal tersebut sudah ada');</script>";

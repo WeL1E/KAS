@@ -6,12 +6,12 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) { //memeriksa id dan
 
     // Mengambil data yang berada di database
     $no=1;
-    $ambildatar = mysqli_query($conn, "SELECT * FROM keluar");
-?>
-<?php
-$query6 = mysqli_query($conn, "SELECT SUM(jumlah) AS total_jumlah FROM keluar");
-$result6 = mysqli_fetch_assoc($query6);
-$total6 = number_format($result6['total_jumlah'], 0, ',', ',');
+    $ambildatad = mysqli_query($conn, "SELECT * FROM keluar");
+
+    $query = mysqli_query($conn, "SELECT SUM(jumlah) AS total_jumlah FROM keluar");
+    $result = mysqli_fetch_assoc($query);
+    $total1 = number_format($result['total_jumlah'], 0, ',', ',');
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -39,7 +39,7 @@ $total6 = number_format($result6['total_jumlah'], 0, ',', ',');
 <div class="w3-teal">
     <button id="openNav" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">&#9776;</button>
     <div class="w3-container">
-        <h1><a href="home.php" class="d">Data Pengeluaran Kas</a></h1>
+        <h1><a href="home.php" class="d">Data Pemasukan Kas</a></h1>
         <div class="tag">
             <h6 class="p">Selamat Datang! <?php echo $_SESSION['nama']; ?></h6>
         <a href="logout.php" class="q">Logout</a>
@@ -51,28 +51,50 @@ $total6 = number_format($result6['total_jumlah'], 0, ',', ',');
         <th>No:</th>
         <th>KETERANGAN:</th>
         <th>HARGA:</th>
-        <th>TANGGAL:</th>
+        <th>AKSI:</th>
     </tr>
 
     <?php //proses menampilkan data dari database
-    while ($tampildatar = mysqli_fetch_array($ambildatar)) {
+    while ($tampildatad = mysqli_fetch_array($ambildatad)) {
         echo "
         <tr>
             <td>$no</td>
-            <td>$tampildatar[keterangan]</td>
-            <td>Rp." . number_format($tampildatar['jumlah'], 0, ',', '.') . "</td>
-            <td>$tampildatar[tanggal]</td>
+            <td>$tampildatad[keterangan]</td>
+            <td>Rp." . number_format($tampildatad['jumlah'], 0, ',', '.') . "</td>
+            <td>
+            <form method='GET' action='daftar_out_edit.php'>
+                <input type='hidden' name='id' value='$tampildatad[id]'>
+                <input type='submit' value='EDIT' style='width: 100%;'>
+            </form>
+            
+            <form method='GET' action='daftar_out.php'>
+                <input type='hidden' name='hapus_id' value='$tampildatad[id]'>
+                <input type='submit' value='HAPUS' name='hapus' style='width: 100%; margin-top: 5px;'>
+            </form>
+        </td>
         </tr>";
 
         $no++;
     }
     ?>
-
     <tr>
-        <td colspan="4" style="text-align: left;">TOTAL PENGELUARAN : Rp.<?php echo $total6; ?></td>
+        <td colspan="5" style="text-align: left;">TOTAL PENGELUARAN : Rp.<?php echo $total1; ?></td>
     </tr>
 </table>
-
+<?php //proses hapus data dari database
+if(isset($_GET['hapus'])) {
+    $id_hapus = $_GET['hapus_id'];
+    
+    $query_delete = "DELETE FROM keluar WHERE id='$id_hapus'";
+    
+    if (mysqli_query($conn, $query_delete)) {
+        echo "<script>alert('Data berhasil dihapus');</script>";
+        echo "<meta http-equiv=refresh content=2;URL='daftar_out.php'>";
+    } else {
+        echo 'Error: ' . mysqli_error($conn);
+    }
+}
+?>
 
 <footer>
     <p>Footer</p>

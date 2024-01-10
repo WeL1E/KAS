@@ -21,6 +21,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                 // Jika data belum ada, lakukan penyimpanan
                 mysqli_query($conn, "INSERT INTO anggota SET nama = '$nama', alamat = '$alamat'");
                 echo "<script>alert('Data berhasil disimpan');</script>";
+                echo "<meta http-equiv=refresh content=2;URL='daftar_anggota.php'>";
+
             } else {
                 // Jika data sudah ada, berikan pesan kesalahan
                 echo "<script>alert('Data dengan nama dan alamat tersebut sudah ada');</script>";
@@ -81,6 +83,20 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
         </tr>
     </table>
 </form>
+<?php //proses hapus data dari database
+if(isset($_GET['hapus'])) {
+    $id_hapus = $_GET['hapus_id'];
+    
+    $query_delete = "DELETE FROM anggota WHERE id='$id_hapus'";
+    
+    if (mysqli_query($conn, $query_delete)) {
+        echo "<script>alert('Data berhasil dihapus');</script>";
+        echo "<meta http-equiv=refresh content=2;URL='daftar_kas.php'>";
+    } else {
+        echo 'Error: ' . mysqli_error($conn);
+    }
+}
+?>
 <footer>
     <p>Footer</p>
 </footer>

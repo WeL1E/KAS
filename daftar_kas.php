@@ -52,6 +52,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) { //memeriksa id dan
         <th>NAMA:</th>
         <th>JUMLAH:</th>
         <th>TANGGAL:</th>
+        <th>AKSI:</th>
     </tr>
 
     <?php //proses menampilkan data dari database
@@ -62,16 +63,40 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) { //memeriksa id dan
             <td>$tampildatad[nama]</td>
             <td>Rp." . number_format($tampildatad['jumlah'], 0, ',', '.') . "</td>
             <td>$tampildatad[tanggal]</td>
+            <td>
+            <form method='GET' action='edit_pemasukan.php'>
+                <input type='hidden' name='id' value='$tampildatad[id]'>
+                <input type='submit' value='EDIT' style='width: 100%;'>
+            </form>
+            
+            <form method='GET' action='daftar_kas.php'>
+                <input type='hidden' name='hapus_id' value='$tampildatad[id]'>
+                <input type='submit' value='HAPUS' name='hapus' style='width: 100%; margin-top: 5px;'>
+            </form>
+        </td>
         </tr>";
 
         $no++;
     }
     ?>
     <tr>
-        <td colspan="4" style="text-align: left;">TOTAL PEMASUKAN : Rp.<?php echo $total1; ?></td>
+        <td colspan="5" style="text-align: left;">TOTAL PEMASUKAN : Rp.<?php echo $total1; ?></td>
     </tr>
 </table>
-
+<?php //proses hapus data dari database
+if(isset($_GET['hapus'])) {
+    $id_hapus = $_GET['hapus_id'];
+    
+    $query_delete = "DELETE FROM masuk WHERE id='$id_hapus'";
+    
+    if (mysqli_query($conn, $query_delete)) {
+        echo "<script>alert('Data berhasil dihapus');</script>";
+        echo "<meta http-equiv=refresh content=2;URL='daftar_kas.php'>";
+    } else {
+        echo 'Error: ' . mysqli_error($conn);
+    }
+}
+?>
 
 <footer>
     <p>Footer</p>
